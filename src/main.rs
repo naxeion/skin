@@ -14,7 +14,7 @@ fn main() {
 	}
 
 	let _ = db::setup_database();
-	let _ = command::setup_config_dir();
+	let _ = command::setup_config_dir(None);
 
 	let (mut cmd, matches) = args::parse_args();
 
