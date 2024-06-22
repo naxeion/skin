@@ -14,7 +14,7 @@ pub fn get_target_data(target: &str) -> Result<Vec<Metadata<'static>>> {
 	let sql = "SELECT TARGET, REPLACED_WITH, SKINNER, STATUS, LAST_USE_DATE, LAST_USE_CMD, CREATED_AT FROM TARGETS WHERE TARGET LIKE ?1";
 	let mut stmt = db_conn.prepare(sql)?;
 
-	let pattern = if target.contains("/") {
+	let pattern = if target.contains('/') {
 		format!("%{}", target)
 	} else {
 		format!("%/{}", target)
@@ -38,9 +38,9 @@ pub fn get_target_data(target: &str) -> Result<Vec<Metadata<'static>>> {
 			replaced_with,
 			skinner: skinner_ref,
 			status,
-			last_use_date: Some(last_use_date.unwrap_or(String::new())),
-			last_use_cmd: Some(last_use_cmd.unwrap_or(String::new())),
-			created_at: Some(created_at.unwrap_or(String::new())),
+			last_use_date: Some(last_use_date.unwrap_or_default()),
+			last_use_cmd: Some(last_use_cmd.unwrap_or_default()),
+			created_at: Some(created_at.unwrap_or_default()),
 		})
 	})?;
 
