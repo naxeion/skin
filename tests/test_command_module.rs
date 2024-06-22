@@ -1,7 +1,7 @@
 use rskin::modules::command::*;
 
 use std::fs;
-use tempdir::TempDir;
+use tempfile::TempDir;
 
 #[test]
 fn test_find_command_paths() {
@@ -87,16 +87,17 @@ fn test_is_builtin_command() {
 
 #[test]
 fn test_setup_config_dir() {
-	// Create a temporary directory and define the testing path
-	let temp_dir = TempDir::new("skin_test").unwrap();
-	let temp_path = temp_dir.path().to_str().unwrap();
-	let test_path = format!("{}/.skin", temp_path);
+    // Create a temporary directory and define the testing path
+    let temp_dir = TempDir::new().unwrap();
+    let temp_path = temp_dir.path().to_str().unwrap();
+    let test_path = format!("{}/.skin", temp_path);
 
-	// Call the function with the temporary directory
-	setup_config_dir(Some(&test_path)).unwrap();
+    // Call the function with the temporary directory
+	println!("{:?}", test_path);
+    setup_config_dir(Some(&test_path)).unwrap();
 
-	// Check if the directory was created
-	assert!(fs::metadata(test_path).is_ok());
+    // Check if the directory was created
+    assert!(fs::metadata(test_path).is_ok());
 
-	// TempDir is automatically cleaned up, no need for manual cleanup
+    // TempDir is automatically cleaned up, no need for manual cleanup
 }
