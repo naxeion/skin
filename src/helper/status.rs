@@ -7,16 +7,13 @@ use crate::{error, error::throw};
 pub fn action(target: &str) -> Result<(), Box<dyn std::error::Error>> {
 	match get_activation_status(target) {
 		Ok(activation_status) => {
-			if activation_status == true {
-				match command::find_command_paths(target) {
-					Ok(command_paths) => {
-						if command_paths.iter().count() == 0 {
-							throw!(error::NOT_EXISTING_ENTITY, exit);
-						} else {
-							cprintln!("Active: <green,bold>{}</>", "active (usable)");
-						}
+			if activation_status {
+				if let Ok(command_paths) = command::find_command_paths(target) {
+					if command_paths.is_empty() {
+						throw!(error::NOT_EXISTING_ENTITY, exit);
+					} else {
+						cprintln!("Active: <green,bold>{}</>", "active (usable)");
 					}
-					Err(..) => {}
 				}
 			} else {
 				cprintln!("Active: <red,bold>{}</>", "inactive (unusable)");
@@ -62,7 +59,7 @@ pub fn action(target: &str) -> Result<(), Box<dyn std::error::Error>> {
 pub fn get_activation_status(target: &str) -> Result<bool, Box<dyn std::error::Error>> {
 	match get_target_data(target) {
 		Ok(metadata_vec) => {
-			if metadata_vec.len() == 0 {
+			if metadata_vec.is_empty() {
 				return Ok(true);
 			}
 		}
