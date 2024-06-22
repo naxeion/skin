@@ -20,7 +20,7 @@ pub fn r#do(target: &str) -> Option<Metadata> {
 			let replaced_with: String = format!("{}/{}", path, s);
 
 			let _ = fs::rename(target, replaced_with.clone());
-			return Some(Metadata {
+			Some(Metadata {
 				target,
 				replaced_with,
 				skinner: "R",
@@ -28,7 +28,7 @@ pub fn r#do(target: &str) -> Option<Metadata> {
 				last_use_date: None,
 				last_use_cmd: None,
 				created_at: None,
-			});
+			})
 		} else {
 			panic!("Target '{}' exists, but it's not a file.", target);
 		}
