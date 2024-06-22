@@ -1,4 +1,3 @@
-use dirs::home_dir;
 use std::fs;
 use std::fs::OpenOptions;
 use std::io;
@@ -134,7 +133,7 @@ pub fn get_alias(command: &str) -> Option<String> {
 }
 
 pub fn alias(command: &str, alias: &str) -> bool {
-	let mut profile_path = match home_dir() {
+	let mut profile_path = match dirs::home_dir() {
 		Some(path) => path.join(".bashrc"),
 		None => return false,
 	};
@@ -149,7 +148,7 @@ pub fn alias(command: &str, alias: &str) -> bool {
 		.open(profile_path)
 		.expect("Failed to open profile file");
 
-	write!(file, "alias {}='{}'\n", command, alias).expect("Failed to write to profile");
+	writeln!(file, "alias {}='{}'\n", command, alias).expect("Failed to write to profile");
 	true
 }
 
@@ -159,7 +158,7 @@ pub fn unalias(command: &str) -> bool {
 		return false;
 	}
 
-	let mut profile_path = match home_dir() {
+	let mut profile_path = match dirs::home_dir() {
 		Some(path) => path.join(".bashrc"),
 		None => return false,
 	};
