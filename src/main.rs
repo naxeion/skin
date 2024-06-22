@@ -8,7 +8,7 @@ use std::ffi::OsStr;
 use std::process;
 
 fn main() {
-	if as_root() == false {
+	if !as_root() {
 		color_print::cprintln!("<red,bold>Error:</> {}", error::ERROR_NOT_ROOT);
 		process::exit(0);
 	}
@@ -20,23 +20,20 @@ fn main() {
 
 	if let Some((subcommand, sub_matches)) = matches.subcommand() {
 		let mut extras_arg: String = "".to_string();
-		match sub_matches.try_contains_id("extras") {
-			Ok(status) => {
-				if status {
-					if let Some(mut extras) = sub_matches.get_raw("extras") {
-						let first_arg = extras.next().map_or_else(|| OsStr::new(""), |arg| &arg);
-						let rest_of_arguments: Vec<String> = extras
-							.map(|arg| arg.to_string_lossy().to_string())
-							.collect();
+		if let Ok(status) = sub_matches.try_contains_id("extras") {
+			if status {
+				if let Some(mut extras) = sub_matches.get_raw("extras") {
+					let first_arg = extras.next().map_or_else(|| OsStr::new(""), |arg| arg);
+					let rest_of_arguments: Vec<String> = extras
+						.map(|arg| arg.to_string_lossy().to_string())
+						.collect();
 
-						let extras_as_string = first_arg.to_string_lossy().to_string();
-						let rest_as_string = rest_of_arguments.join(" ");
+					let extras_as_string = first_arg.to_string_lossy().to_string();
+					let rest_as_string = rest_of_arguments.join(" ");
 
-						extras_arg = format!("{} {}", extras_as_string, rest_as_string);
-					}
+					extras_arg = format!("{} {}", extras_as_string, rest_as_string);
 				}
 			}
-			Err(..) => {}
 		}
 
 		handle_subcommand(subcommand, sub_matches, &extras_arg);
