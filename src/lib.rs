@@ -1,36 +1,24 @@
+extern crate clean_path;
 extern crate libc;
+
 use rand::{distributions::Alphanumeric, Rng};
 use std::path::PathBuf;
 
-pub mod args;
-pub mod commands;
 pub mod config;
 pub mod error;
 pub mod helper;
 pub mod modules;
 pub mod skinners;
 
-pub fn handle_subcommand(subcommand: &str, matches: &clap::ArgMatches, extras: &str) {
-	match subcommand {
-		"db" => {}
-		"run" => {
-			let target = matches.get_one::<String>("target").unwrap();
-			commands::run_command(target, extras);
-		}
-		"activate" | "disactivate" | "status" => {
-			let target = matches.get_one::<String>("target").unwrap();
-			commands::bar_command(subcommand, target);
-		}
-		_ => {
-			println!("Unknown command: {}", subcommand);
-		}
-	}
-}
-
 pub fn get_parent_directory(file_path: &str) -> String {
 	let mut path_buf = PathBuf::from(file_path);
 	path_buf.pop();
 	path_buf.to_string_lossy().into_owned()
+}
+
+pub fn clean_path(path: &str) -> String {
+	let cleaned_path = clean_path::clean(path);
+	cleaned_path.to_string_lossy().into_owned()
 }
 
 pub fn get_random_string(length: usize) -> String {
