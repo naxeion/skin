@@ -211,6 +211,21 @@ pub fn setup_config_dir(custom_path: Option<&str>) -> Result<(), std::io::Error>
 	Ok(())
 }
 
+pub fn is_config_dir_exist(custom_path: Option<&str>) -> bool {
+	let path = custom_path.unwrap_or(SKIN_CONFIG_DIRECTORY);
+	let expanded_path = shellexpand::tilde(path).into_owned();
+
+	if let Ok(metadata) = fs::metadata(expanded_path) {
+		metadata.is_dir()
+	} else {
+		false
+	}
+}
+
+pub fn file_exists(file_path: &str) -> bool {
+	fs::metadata(file_path).is_ok()
+}
+
 pub fn get_profile_extension() -> &'static str {
 	if cfg!(target_os = "macos") || cfg!(target_os = "ios") {
 		".zshrc"
