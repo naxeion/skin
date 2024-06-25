@@ -4,7 +4,7 @@ use crate::helper::get_target_data;
 use crate::modules::command;
 use crate::{error, error::throw};
 
-pub fn action(target: &str) -> Result<(), Box<dyn std::error::Error>> {
+pub fn action(target: &str) -> Result<bool, Box<dyn std::error::Error>> {
 	match get_activation_status(target) {
 		Ok(activation_status) => {
 			if activation_status {
@@ -27,11 +27,16 @@ pub fn action(target: &str) -> Result<(), Box<dyn std::error::Error>> {
 								metadata.created_at.as_deref().unwrap_or("Unknown")
 							);
 							println!("{:<4}- Skinner       : \"{}\"", "", metadata.skinner);
-							println!("{:<4}- Replaced with : {}", "", metadata.replaced_with);
+
+							if let Some(replaced_with) = metadata.replaced_with.as_deref() {
+								if !replaced_with.is_empty() {
+									println!("{:<4}- Replaced with : {}", "", replaced_with);
+								}
+							}
 
 							if let Some(date) = metadata.last_use_date.as_deref() {
 								if !date.is_empty() {
-									println!("{:<4}- Last use time : {:?}", "", date);
+									println!("{:<4}- Last use time : {}", "", date);
 								}
 							}
 
@@ -45,6 +50,8 @@ pub fn action(target: &str) -> Result<(), Box<dyn std::error::Error>> {
 								println!();
 							}
 						}
+
+						return Ok(true);
 					}
 					Err(err) => println!("Error retrieving target data: {:?}", err),
 				}
@@ -53,7 +60,7 @@ pub fn action(target: &str) -> Result<(), Box<dyn std::error::Error>> {
 		Err(err) => println!("Error retrieving target data: {:?}", err),
 	}
 
-	Ok(())
+	Ok(false)
 }
 
 pub fn get_activation_status(target: &str) -> Result<bool, Box<dyn std::error::Error>> {
