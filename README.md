@@ -14,7 +14,7 @@ cargo install rskin
 
 ## Usage
 ```
-rskin --help
+skin --help
 ```
 
 ## License
