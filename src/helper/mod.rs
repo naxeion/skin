@@ -22,7 +22,7 @@ pub fn get_target_data(target: &str) -> Result<Vec<Metadata<'static>>> {
 
 	let metadata_iter = stmt.query_map(params![pattern], |row| {
 		let target: String = row.get(0)?;
-		let replaced_with: String = row.get(1)?;
+		let replaced_with: Option<String> = row.get(1)?;
 		let skinner: String = row.get(2)?;
 		let status: bool = row.get(3)?;
 
