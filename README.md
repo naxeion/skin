@@ -19,6 +19,6 @@ skin --help
 
 ## License
 
-This project is dual-licensed under the 3-Clause BSD License or the PostgreSQL License.
+This project is dual-licensed under the 3-Clause BSD License and the PostgreSQL License.
 - [3-Clause BSD License](./LICENSE-BSD)
 - [PostgreSQL License](./LICENSE-PostgreSQL)
