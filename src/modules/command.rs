@@ -6,7 +6,7 @@ use std::io::Write;
 use std::process::Command;
 use std::str;
 
-use crate::config::SKIN_CONFIG_DIRECTORY;
+use crate::config::{SKIN_CONFIG_DIRECTORY, SKIN_SKINNERS_DIRECTORY, SKIN_TEMP_DIRECTORY};
 
 // List of some common Linux built-in commands
 const BUILT_IN_COMMANDS: &[&str] = &[
@@ -201,11 +201,17 @@ pub fn is_builtin_command(command: &str) -> bool {
 }
 
 pub fn setup_config_dir(custom_path: Option<&str>) -> Result<(), std::io::Error> {
-	let path = custom_path.unwrap_or(SKIN_CONFIG_DIRECTORY);
-	let expanded_path = shellexpand::tilde(path).into_owned();
+	for s_path in [
+		SKIN_CONFIG_DIRECTORY,
+		SKIN_SKINNERS_DIRECTORY,
+		SKIN_TEMP_DIRECTORY,
+	] {
+		let path = custom_path.unwrap_or(s_path);
+		let expanded_path = shellexpand::tilde(path).into_owned();
 
-	if fs::metadata(&expanded_path).is_err() {
-		fs::create_dir_all(&expanded_path)?;
+		if fs::metadata(&expanded_path).is_err() {
+			fs::create_dir_all(&expanded_path)?;
+		}
 	}
 
 	Ok(())
