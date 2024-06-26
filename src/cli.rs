@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use tokio::runtime::Runtime;
 
 use rskin::helper::{activate, disactivate, run, status};
 
@@ -30,7 +31,13 @@ pub enum Commands {
 		#[arg(allow_hyphen_values = true, num_args = 1..)]
 		extras: Vec<String>,
 	},
+	Install {
+		url: String,
+	},
 	Config {
+		command: String,
+	},
+	Update {
 		command: String,
 	},
 }
@@ -43,7 +50,18 @@ pub fn execute_command(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
 		}
 		Commands::Status { target } => status::action(&target),
 		Commands::Run { target, extras } => run::action(&target, &string_extras(&extras)),
+		Commands::Install { url } => {
+			let rt = Runtime::new()?;
+
+			rt.block_on(async {
+				if let Err(err) = skin_builder::installer::operate(&url).await {
+					eprintln!("Error installing file: {}", err);
+				}
+				Ok(true)
+			})
+		}
 		Commands::Config { command: _ } => todo!(),
+		Commands::Update { command: _ } => todo!(),
 	};
 
 	Ok(())
