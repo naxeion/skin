@@ -4,6 +4,7 @@ use std::fs;
 use std::path::Path;
 
 use crate::config::SKIN_CONFIG_DIRECTORY;
+use crate::error::{self, throw};
 
 // Path to the main database file
 pub static DATABASE_PATH: Lazy<String> = Lazy::new(|| format!("{}/main.db", SKIN_CONFIG_DIRECTORY));
@@ -48,10 +49,14 @@ pub fn execute_sql_from_file(
 	Ok(())
 }
 
-// Executes a single SQL command against the provided database connection.
+// Executes a single SQL command against the provided database connection
 pub fn execute_sql(conn: &rusqlite::Connection, sql_code: &str) -> Result<()> {
-	conn.execute_batch(sql_code)?;
-	Ok(())
+	match conn.execute_batch(sql_code) {
+		Ok(_) => Ok(()),
+		Err(_) => {
+			throw!(error::SQL_EXECUTE_ERROR, exit);
+		}
+	}
 }
 
 // Sets up the main database by executing the schema SQL from DATABASE_SCHEMA
