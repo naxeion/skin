@@ -1,6 +1,9 @@
+pub mod external;
 pub mod l;
 pub mod r;
 pub mod x;
+
+use skin_builder::makefile;
 
 use crate::error;
 
@@ -8,6 +11,7 @@ enum Skinner {
 	L,
 	R,
 	X,
+	External,
 }
 
 #[derive(Debug, Clone)]
@@ -40,8 +44,11 @@ pub fn run_by_skinner(
 		"R" => Skinner::R,
 		"X" => Skinner::X,
 		_ => {
-			error::throw!(error::SKINNER_NOT_EXIST);
-			return Ok(false);
+			if !makefile::is_skinner_exist(skinner) {
+				error::throw!(error::SKINNER_NOT_EXIST);
+				return Ok(false);
+			}
+			Skinner::External
 		}
 	};
 
@@ -49,6 +56,7 @@ pub fn run_by_skinner(
 		Skinner::L => l::action_run(target, extras_value),
 		Skinner::R => r::action_run(target, extras_value),
 		Skinner::X => x::action_run(target, extras_value),
+		Skinner::External => external::action_run(target, extras_value, skinner),
 	}
 }
 
@@ -58,8 +66,11 @@ pub fn r#do<'a>(target: &'a str, skinner: &'a str) -> Option<Metadata<'a>> {
 		"R" => Skinner::R,
 		"X" => Skinner::X,
 		_ => {
-			error::throw!(error::SKINNER_NOT_EXIST);
-			return None;
+			if !makefile::is_skinner_exist(skinner) {
+				error::throw!(error::SKINNER_NOT_EXIST);
+				return None;
+			}
+			Skinner::External
 		}
 	};
 
@@ -67,6 +78,7 @@ pub fn r#do<'a>(target: &'a str, skinner: &'a str) -> Option<Metadata<'a>> {
 		Skinner::L => l::r#do(target),
 		Skinner::R => r::r#do(target),
 		Skinner::X => x::r#do(target),
+		Skinner::External => external::r#do(target, skinner),
 	}
 }
 
@@ -76,8 +88,11 @@ pub fn undo(metadata: Metadata) -> bool {
 		"R" => Skinner::R,
 		"X" => Skinner::X,
 		_ => {
-			error::throw!(error::SKINNER_NOT_EXIST);
-			return false;
+			if !makefile::is_skinner_exist(metadata.skinner) {
+				error::throw!(error::SKINNER_NOT_EXIST);
+				return false;
+			}
+			Skinner::External
 		}
 	};
 
@@ -85,5 +100,6 @@ pub fn undo(metadata: Metadata) -> bool {
 		Skinner::L => l::undo(metadata),
 		Skinner::R => r::undo(metadata),
 		Skinner::X => x::undo(metadata),
+		Skinner::External => external::undo(metadata),
 	}
 }
