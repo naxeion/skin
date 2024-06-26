@@ -24,5 +24,5 @@ rand = "0.8.5"
 rusqlite = "0.31.0"
 shellexpand = "3.1.0"
 tempfile = "3.10.1"
-skin-builder = { path = "./skin-builder" }
+skin-builder = { path = "./skin-builder", version = "1.0.0" }
 tokio = "1.38.0"
