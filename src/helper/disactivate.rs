@@ -1,8 +1,10 @@
+use skin_builder::makefile;
+
+use crate::error::{self, throw};
 use crate::modules::command;
 use crate::modules::db;
 use crate::skinners::is_skinner_exist;
 use crate::skinners::r#do;
-use crate::{error, error::throw};
 
 pub fn action(target: &str, skinner: &str) -> Result<bool, Box<dyn std::error::Error>> {
 	let paths = command::find_command_paths(target);
@@ -12,7 +14,7 @@ pub fn action(target: &str, skinner: &str) -> Result<bool, Box<dyn std::error::E
 		throw!(error::CANNOT_DISACTIVATE_BUILTIN, exit);
 	}
 
-	if is_skinner_exist(skinner) {
+	if is_skinner_exist(skinner) || makefile::is_skinner_exist(skinner) {
 		match paths {
 			Ok(paths) => {
 				if paths.is_empty() {
@@ -33,10 +35,13 @@ pub fn action(target: &str, skinner: &str) -> Result<bool, Box<dyn std::error::E
 
 				return Ok(true);
 			}
-			Err(error) => throw!(format!("Error searching for command paths: {:?}", error), exit),
+			Err(error) => throw!(
+				format!("Error searching for command paths: {:?}", error),
+				exit
+			),
 		}
 	} else {
-		error::throw!(error::SKINNER_NOT_EXIST);
+		throw!(error::SKINNER_NOT_EXIST);
 	}
 
 	Ok(false)
