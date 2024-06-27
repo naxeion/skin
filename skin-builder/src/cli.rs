@@ -4,7 +4,7 @@ use tokio::runtime::Runtime;
 use skin_builder::installer;
 
 #[derive(Parser)]
-#[command(name = "skin-builder", version = "1.0.0")]
+#[command(name = "skin-builder", version = "1.0.2")]
 pub struct Cli {
 	#[command(subcommand)]
 	pub command: Commands,
