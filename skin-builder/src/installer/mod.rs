@@ -1,5 +1,3 @@
-// Git commit msg for this file, 10 words: 
-
 use std::fs;
 use std::fs::File;
 use std::io::Write;
