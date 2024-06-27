@@ -1280,7 +1280,7 @@ dependencies = [
 
 [[package]]
 name = "skin-builder"
-version = "1.0.1"
+version = "1.0.2"
 dependencies = [
  "clap",
  "color-print",
