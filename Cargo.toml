@@ -1,28 +1,6 @@
-[package]
-name = "rskin"
-version = "1.4.0-beta"
-description = "A project for managing commands and applying skinners"
-authors = ["Naxeion <naxeion@startmail.com>"]
-repository = "https://github.com/naxeion/skin"
-edition = "2021"
-readme = "README.md"
-license = "BSD-3-Clause AND PostgreSQL"
-
-[[bin]]
-name = "skin"
-path = "src/main.rs"
-
-[dependencies]
-chrono = "0.4.38"
-clap = { version = "4.5.6", features = ["derive"] }
-clean-path = "0.2.1"
-color-print = "0.3.6"
-dirs = "5.0.1"
-libc = "0.2.155"
-once_cell = "1.19.0"
-rand = "0.8.5"
-rusqlite = "0.31.0"
-shellexpand = "3.1.0"
-tempfile = "3.10.1"
-skin-builder = { path = "./skin-builder", version = "1.0.0" }
-tokio = "1.38.0"
+[workspace]
+members = [
+	"rskin",
+	"skin-builder",
+]
+resolver = "2"
