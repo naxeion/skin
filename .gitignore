@@ -1,6 +1,6 @@
 /target
 **/target/
 
-docs/
+**/docs/
 Sandbox.*/
 .vscode/settings.json
