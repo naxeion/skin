@@ -13,3 +13,4 @@ macro_rules! throw {
 pub(crate) use throw;
 
 pub const SKINNER_FILE_NOT_FOUND: &str = "Skinner file not found";
+pub const ERROR_NOT_ROOT: &str = "You must be root to run this command";
