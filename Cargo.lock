@@ -161,9 +161,9 @@ checksum = "514de17de45fdb8dc022b1a7975556c53c86f9f0aa5f534b98977b171857c2c9"
 
 [[package]]
 name = "cc"
-version = "1.0.102"
+version = "1.0.103"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "779e6b7d17797c0b42023d417228c02889300190e700cb074c3438d9c541d332"
+checksum = "2755ff20a1d93490d26ba33a6f092a38a508398a5320df5d4b3014fcccce9410"
 
 [[package]]
 name = "cfg-if"
@@ -1083,7 +1083,7 @@ dependencies = [
 
 [[package]]
 name = "rskin"
-version = "1.4.4-beta"
+version = "1.4.5-beta"
 dependencies = [
  "chrono",
  "clap",
@@ -1280,7 +1280,7 @@ dependencies = [
 
 [[package]]
 name = "skin-builder"
-version = "1.0.2"
+version = "1.0.4"
 dependencies = [
  "clap",
  "color-print",
