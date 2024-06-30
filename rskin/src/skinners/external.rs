@@ -32,7 +32,7 @@ pub fn r#do<'a>(target: &'a str, skinner: &'a str) -> Option<Metadata<'a>> {
 }
 
 pub fn undo(metadata: Metadata) -> bool {
-	actions::undo(&metadata.target, &metadata.skinner)
+	actions::undo(metadata.target, metadata.skinner)
 }
 
 pub fn action_run(
@@ -47,7 +47,7 @@ pub fn action_run(
 			target = target_metadata.target;
 
 			let mut cmd = Command::new("make")
-				.args(&[
+				.args([
 					"-f",
 					&skinner_file,
 					"run",
