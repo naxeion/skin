@@ -8,7 +8,6 @@ edition = "2021"
 readme = "../README.md"
 documentation = "../docs/Index.md"
 license = "BSD-3-Clause AND PostgreSQL"
-license-file = ["../LICENSE-BSD", "../LICENSE-PostgreSQL"]
 
 [lib]
 path = "src/lib.rs"
