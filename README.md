@@ -13,6 +13,12 @@ Through Skinners, you can hide commands in different ways, with limits on execut
 
 Currently the project does not support all platforms.
 
+<div align=center>
+
+[![DOCS - Getting Started](https://img.shields.io/badge/docs-getting_started-f3f6f4?style=for-the-badge&labelColor=f3f6f4)](/docs/Index.md)
+
+</div>
+
 ## Installation
 
 To install Skin, you can use Cargo, Rust's package manager:
