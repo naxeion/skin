@@ -1,12 +1,14 @@
 [package]
 name = "rskin"
-version = "1.4.4-beta"
+version = "1.4.5-beta"
 description = "A project for managing commands and applying skinners"
 authors = ["Naxeion <naxeion@startmail.com>"]
 repository = "https://github.com/naxeion/skin"
 edition = "2021"
 readme = "../README.md"
+documentation = "../docs/Index.md"
 license = "BSD-3-Clause AND PostgreSQL"
+license-file = ["../LICENSE-BSD", "../LICENSE-PostgreSQL"]
 
 [[bin]]
 name = "skin"
