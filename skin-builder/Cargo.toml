@@ -1,12 +1,14 @@
 [package]
 name = "skin-builder"
-version = "1.0.3"
+version = "1.0.4"
 description = "A tool for installing external skinners"
 authors = ["Naxeion <naxeion@startmail.com>"]
 repository = "https://github.com/naxeion/skin"
 edition = "2021"
 readme = "../README.md"
+documentation = "../docs/Index.md"
 license = "BSD-3-Clause AND PostgreSQL"
+license-file = ["../LICENSE-BSD", "../LICENSE-PostgreSQL"]
 
 [lib]
 path = "src/lib.rs"
