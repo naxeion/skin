@@ -6,7 +6,7 @@ use crate::makefile::get_skinner_file;
 pub fn execute_makefile(file: &str, target: &str, action: &str) -> String {
 	// Execute the skinner makefile
 	let output: Output = Command::new("make")
-		.args(&["-f", file, action, &format!("TARGET={}", target)])
+		.args(["-f", file, action, &format!("TARGET={}", target)])
 		.output()
 		.expect("Failed to execute make command");
 
@@ -23,7 +23,7 @@ pub fn r#do(target: &str, skinner: &str) -> (bool, Option<String>) {
 	let skinner_file = get_skinner_file(skinner);
 
 	// Check if the file exists
-	if !std::fs::metadata(&skinner_file).is_ok() {
+	if std::fs::metadata(&skinner_file).is_err() {
 		throw!(error::SKINNER_FILE_NOT_FOUND, exit);
 	}
 
