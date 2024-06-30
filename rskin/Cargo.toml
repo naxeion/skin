@@ -6,7 +6,7 @@ authors = ["Naxeion <naxeion@startmail.com>"]
 repository = "https://github.com/naxeion/skin"
 edition = "2021"
 readme = "../README.md"
-documentation = "../docs/Index.md"
+documentation = "https://github.com/naxeion/skin/blob/master/docs/Index.md"
 license = "BSD-3-Clause AND PostgreSQL"
 
 [[bin]]
