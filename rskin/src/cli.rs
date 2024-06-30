@@ -6,7 +6,7 @@ use rskin::helper::{activate, disactivate, run, status};
 #[derive(Parser)]
 #[command(
 	name = "skin",
-	version = "1.4.4-beta",
+	version = "1.4.5-beta",
 	about = "A project for managing commands and applying skinners"
 )]
 pub struct Cli {
