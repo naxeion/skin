@@ -6,8 +6,6 @@ Skinners are a technique and method used to hide commands or targets. They provi
 
 Skin tool provides some built-in skinners, but you can also create your own.
 
-![Skin Operating](../D_Skin_Operating.png)
-
 ## Built-in Skinners
 
 Skin provides some built-in skinners, such as:
