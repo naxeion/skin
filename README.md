@@ -36,8 +36,6 @@ skin --help
 
 Refer to the [docs](docs/Index.md) for more information about Skin.
 
-![Skin Operating](D_Skin_Operating.png)
-
 ## License
 
 This project is dual-licensed under the 3-Clause BSD License and the PostgreSQL License.
