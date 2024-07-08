@@ -23,6 +23,8 @@ pub fn action(target: &str) -> Result<bool, Box<dyn std::error::Error>> {
 						}
 					}
 				}
+
+				color_print::cprintln!("The target has been activated <green>successfully</>.");
 			}
 		}
 		Err(err) => println!("Error retrieving target data: {:?}", err),
