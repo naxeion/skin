@@ -33,6 +33,8 @@ pub fn action(target: &str, skinner: &str) -> Result<bool, Box<dyn std::error::E
 					}
 				}
 
+				color_print::cprintln!("The target has been disactivated <green>successfully</>.");
+
 				return Ok(true);
 			}
 			Err(error) => throw!(
