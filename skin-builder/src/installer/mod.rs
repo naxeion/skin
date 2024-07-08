@@ -1,3 +1,5 @@
+use dialoguer::Confirm;
+use indicatif::ProgressBar;
 use std::fs;
 use std::fs::File;
 use std::io::Write;
@@ -64,13 +66,58 @@ pub fn apply(filename: &str) -> bool {
 }
 
 pub async fn download_file(url: &str, filename: &str) -> Result<(), Box<dyn std::error::Error>> {
-	let response = reqwest::get(url).await?;
+	let mut response = reqwest::get(url).await?;
+
+	if Path::new(filename).exists() {
+		let confirm_overwrite = Confirm::new()
+			.with_prompt("The skinner is exist already, do you want to overwrite it?")
+			.default(false)
+			.show_default(true)
+			.interact()?;
+
+		if confirm_overwrite {
+			fs::remove_file(filename)?;
+			// color_print::cprintln!(
+			// 	"<yellow>The current targets will be converted to the new skinner.</>"
+			// );
+
+			// let confirm_continue = Confirm::new()
+			// 	.with_prompt("Are you sure you want to continue?")
+			// 	.default(false)
+			// 	.show_default(true)
+			// 	.interact()?;
+
+			// if confirm_continue {
+			// 	fs::remove_file(filename)?;
+			// } else {
+			// 	throw!("Skinner already exists and overwrite not confirmed.", exit);
+			// }
+		} else {
+			throw!("Skinner already exists and overwrite not confirmed.", exit);
+		}
+	}
+
+	let length = response.content_length().unwrap_or(0);
+	let pb = ProgressBar::new(length);
+	pb.set_style(
+		indicatif::ProgressStyle::default_bar()
+			.template("[{elapsed_precise}] {bar:30.black/white} {bytes}/{total_bytes} ({eta})")?
+			.progress_chars("- -"),
+	);
 
 	if response.status().is_success() {
 		let mut file = File::create(filename)?;
 
-		let bytes = response.bytes().await?;
-		file.write_all(&bytes)?;
+		let mut downloaded = 0;
+		while let Some(chunk) = response.chunk().await? {
+			file.write_all(&chunk)?;
+			downloaded += chunk.len() as u64;
+			pb.set_position(downloaded);
+		}
+
+		pb.finish_with_message("Download complete");
+
+		color_print::cprintln!("The skinner has been downloaded <green>successfully</>.");
 	} else {
 		throw!("Failed to download file.", exit);
 	}
