@@ -24,7 +24,7 @@ Currently the project does not support all platforms.
 To install Skin, you can use Cargo, Rust's package manager:
 
 ```bash
-cargo install rskin@1.4.7
+cargo install rskin@1.5.0
 ```
 
 ## Usage
